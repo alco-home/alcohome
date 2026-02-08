@@ -133,9 +133,9 @@
         <div class="cat-item-side" onclick="selectCategory('whisky')"><span>🥃 Виски</span></div>
         <div class="cat-item-side" onclick="selectCategory('vodka')"><span>🍸 Водка</span></div>
         <div class="cat-item-side" onclick="selectCategory('cognac')"><span>🍷 Коньяк</span></div>
-        <div class="cat-item-side" onclick="selectCategory('draft')"><span>🍺 Разливное</span></div>
+        <div class="cat-item-side" onclick="selectCategory('draft')"><span>🍺 Разливное пиво</span></div>
         <div class="cat-item-side" onclick="selectCategory('wine')"><span>🍾 Вино</span></div>
-        <div class="cat-item-side" onclick="selectCategory('beer')"><span>🍺 Импорт</span></div>
+        <div class="cat-item-side" onclick="selectCategory('beer')"><span>🍺 Пиво</span></div>
         <div class="cat-item-side" onclick="selectCategory('snacks')"><span>🥨 Закуски</span></div>
     </div>
     <div class="btn-back-side" onclick="toggleSidebar()">← Назад к покупкам</div>
@@ -269,7 +269,7 @@
 
     function selectCategory(type) {
         currentCategory = type;
-        const labels = {whisky:'Виски', vodka:'Водка', cognac:'Коньяк', draft:'Разливное', wine:'Вино', beer:'Импорт', snacks:'Закуски'};
+        const labels = {whisky:'Виски', vodka:'Водка', cognac:'Коньяк', draft:'Разливное пиво', wine:'Вино', beer:'Импорт', snacks:'Закуски'};
         document.getElementById('current-cat-label').innerText = labels[type];
         showCategory(type);
         toggleSidebar();
