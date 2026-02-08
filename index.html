@@ -3,374 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALCO HOME | Premium Store Shymkent</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>ALCO HOME | Premium Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #d40000;
             --gold: #c5a059;
-            --orange-glow: rgba(255, 123, 0, 0.6); /* Цвет подсветки */
-            --dark: #0a0a0a;
-            --card-bg: #1a1a1a;
+            --gold-glow: rgba(197, 160, 89, 0.4);
+            --dark-bg: #0d0d0d;
+            --card-bg: #161616;
         }
 
-        /* ======= ОБЩИЕ СТИЛИ ======= */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            margin: 0;
-            background: var(--dark);
-            font-family: 'Montserrat', sans-serif;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, .cat-card span, .branch-title { 
-            font-family: 'Playfair Display', serif; 
-        }
-
-        /* ======= ЭФФЕКТЫ ПОДСВЕТКИ (ГРАДИЕНТ + РАЗМЫТИЕ) ======= */
-        .cat-card, .product-card, .location-card, .branch-option, .btn-add {
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            border: 1px solid #222;
-        }
-
-        /* Состояние при наведении (ПК) и удержании (Смартфон) */
-        .cat-card:hover, .cat-card:active,
-        .product-card:hover, .product-card:active,
-        .location-card:hover, .location-card:active,
-        .branch-option:hover, .branch-option:active {
-            border-color: #ff7b00;
-            box-shadow: 0 0 15px 2px var(--orange-glow);
-            background: linear-gradient(145deg, #1a1a1a, #251a10);
-            transform: translateY(-2px);
-        }
-
-        /* ======= ОКНО ВЫБОРА ФИЛИАЛА ======= */
-        #branch-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 3000;
-            display: none; 
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-        .modal-content {
-            background: #111;
-            border: 1px solid var(--gold);
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            animation: modalIn 0.3s ease;
-        }
-        @keyframes modalIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        
-        .branch-option {
-            background: var(--card-bg);
-            padding: 20px;
-            margin: 15px 0;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .branch-option b { display: block; color: var(--gold); margin-bottom: 5px; font-size: 18px; }
-        .branch-option span { font-size: 12px; color: #888; }
-
-        /* ======= ПРОВЕРКА ВОЗРАСТА ======= */
-        #age-verify {
-            position: fixed;
-            inset: 0;
-            background: var(--dark);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-        .verify-box { border: 1px solid var(--gold); padding: 40px; background: #000; margin: 20px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Montserrat', sans-serif !important; }
+        body { margin: 0; background: var(--dark-bg); color: #fff; overflow-x: hidden; padding-bottom: 100px; }
 
         /* ======= ШАПКА ======= */
-        .header-logo { text-align: center; padding: 50px 0 20px; }
-        .header-logo img { width: 100px; border-radius: 50%; border: 1px solid var(--gold); margin-bottom: 15px; }
-        .header-logo h1 { color: var(--gold); letter-spacing: 5px; margin: 0; font-size: 28px; }
+        .top-bar { 
+            position: sticky; top: 0; z-index: 1500;
+            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(13, 13, 13, 0.95); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+        }
+        .btn-catalog-top { 
+            background: rgba(197, 160, 89, 0.1); border: 1px solid var(--gold); color: var(--gold); 
+            padding: 10px 15px; border-radius: 8px; font-size: 10px; font-weight: 800; 
+            text-transform: uppercase; cursor: pointer; transition: 0.3s;
+        }
+        .btn-catalog-top:hover { background: rgba(197, 160, 89, 0.2); box-shadow: 0 0 10px var(--gold-glow); }
+        .btn-catalog-top:active { background: var(--gold); color: #000; transform: scale(0.95); }
 
-        /* ======= КАТЕГОРИИ ======= */
-        .page-section { display: none; padding: 20px 20px 120px; min-height: 100vh; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* ======= БОКОВОЕ МЕНЮ (КАТАЛОГ) ======= */
+        #catalog-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+            z-index: 2400; display: none; opacity: 0; transition: 0.4s;
+            backdrop-filter: blur(4px);
+        }
+        #catalog-sidebar {
+            position: fixed; top: 0; left: -280px; width: 280px; height: 100%;
+            background: #111; z-index: 2401; padding: 30px 20px;
+            border-right: 2px solid var(--gold);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
+        }
+        #catalog-sidebar.open { left: 0; }
+        
+        .sidebar-brand { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(197,160,89,0.1); }
+        .sidebar-brand img { width: 50px; border-radius: 50%; border: 1px solid var(--gold); margin-bottom: 10px; }
+        .sidebar-brand div { color: var(--gold); font-size: 14px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; }
 
-        .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .cat-card { 
-            background: #111; 
-            height: 140px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
+        .sidebar-header { color: #555; font-size: 10px; font-weight: 800; margin-bottom: 15px; letter-spacing: 2px; text-align: center; }
+        .cat-list-wrapper { display: flex; flex-direction: column; gap: 8px; }
+        
+        .cat-item-side {
+            background: #1a1a1a; padding: 16px; border-radius: 12px;
+            text-align: left; border: 1px solid rgba(255,255,255,0.03);
+            transition: 0.3s; cursor: pointer; display: flex; align-items: center;
+        }
+        .cat-item-side:hover { border-color: var(--gold); background: #1f1f1f; }
+        .cat-item-side:active { transform: scale(0.95); background: #222; }
+        .cat-item-side span { font-size: 12px; font-weight: 700; text-transform: uppercase; color: #888; letter-spacing: 1px; }
+
+        .btn-back-side {
+            margin-top: 20px; padding: 15px; border-radius: 12px;
+            background: transparent; border: 1px dashed #444; color: #666;
+            text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s;
+        }
+        .btn-back-side:active { background: #222; color: #fff; border-color: #fff; }
+
+        /* ======= СЕТКА ТОВАРОВ ======= */
+        header { text-align: center; padding: 30px 0; }
+        .header-logo img { width: 70px; border-radius: 50%; border: 1px solid var(--gold); }
+        .header-logo h1 { color: var(--gold); letter-spacing: 6px; font-size: 18px; margin-top: 12px; text-transform: uppercase; }
+
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
+        .product-card { 
+            background: var(--card-bg); padding: 15px; border-radius: 20px; 
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s ease;
             cursor: pointer;
         }
-        .cat-card .icon { font-size: 28px; margin-bottom: 8px; }
-        .cat-card span { color: var(--gold); letter-spacing: 1px; font-size: 12px; font-weight: 600; text-align: center; }
+        .product-card:hover { border-color: var(--gold); box-shadow: 0 5px 20px rgba(197, 160, 89, 0.2); transform: translateY(-5px); }
+        .product-card img { width: 100%; height: 130px; object-fit: contain; margin-bottom: 10px; pointer-events: none; }
+        .product-card h3 { font-size: 11px; color: #efefef; height: 32px; overflow: hidden; margin: 0; pointer-events: none; }
+        
+        .add-action-box { 
+            background: rgba(197, 160, 89, 0.1); border: 1px solid var(--gold); 
+            border-radius: 10px; padding: 10px; text-align: center; margin-top: 10px; transition: 0.2s;
+        }
+        .add-action-box:hover { background: rgba(197, 160, 89, 0.25); }
+        .add-action-box:active { background: var(--gold) !important; transform: scale(0.9); }
+        .add-action-box:active span { color: #000 !important; }
+        .add-action-box span { color: var(--gold); font-size: 10px; font-weight: 700; pointer-events: none; }
 
-        /* ======= ТОВАРЫ ======= */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        .product-card { 
-            background: var(--card-bg); 
-            padding: 15px; 
-            text-align: center; 
-            position: relative; 
+        /* ======= НИЖНЯЯ ПАНЕЛЬ ======= */
+        .bottom-nav { 
+            position: fixed; bottom: 0; width: 100%; 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            display: flex; justify-content: space-around; 
+            padding: 8px 10px 20px; z-index: 2000; 
         }
-        .product-card img { width: 100%; height: 120px; object-fit: contain; }
-        .product-card h3 { font-size: 14px; margin: 12px 0 15px; color: #fff; font-weight: 400; height: 35px; overflow: hidden; }
+        .nav-btn { 
+            flex: 1; height: 42px; display: flex; align-items: center; justify-content: center; 
+            background: transparent; border-radius: 12px; transition: 0.2s; cursor: pointer;
+        }
+        .nav-btn:hover { background: rgba(255, 255, 255, 0.05); }
+        .nav-btn img { width: 24px; height: 24px; object-fit: contain; }
 
-        .btn-add { 
-            background: transparent; 
-            color: var(--gold); 
-            border: 1px solid var(--gold); 
-            padding: 10px; 
-            width: 100%; 
-            cursor: pointer; 
-            font-size: 10px; 
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-        .btn-add:active { 
-            background: #ff7b00; 
-            color: #000; 
-            box-shadow: 0 0 20px var(--orange-glow);
-        }
+        .checkout-bar { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 12px 30px; border-radius: 30px; font-weight: 900; font-size: 12px; z-index: 1001; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: pointer; transition: 0.2s; }
 
-        /* ======= НАВИГАЦИЯ ======= */
-        nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: rgba(10, 10, 10, 0.98);
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0 30px;
-            border-top: 1px solid #222;
-            z-index: 1000;
-        }
-        nav a { color: #555; text-decoration: none; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-        nav a.active { color: var(--gold); text-shadow: 0 0 10px var(--orange-glow); }
+        /* МОДАЛКИ */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .modal-content { background: #111; border: 1px solid var(--gold); padding: 25px; width: 90%; max-width: 400px; border-radius: 25px; }
+        .btn-main { background: var(--gold); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: 800; margin-top: 20px; text-transform: uppercase; cursor: pointer; }
+        .branch-option { background: #1a1a1a; padding: 15px; margin: 10px 0; border-radius: 12px; text-align: center; border: 1px solid transparent; transition: 0.2s; cursor: pointer; }
+        .branch-option:hover { border-color: var(--gold); }
 
-        #cart-count { 
-            background: var(--primary); 
-            color: white; 
-            padding: 2px 7px; 
-            border-radius: 10px; 
-            font-size: 10px; 
-            position: absolute; 
-            top: -8px; 
-            right: -12px; 
-        }
-
-        .location-card {
-            background:#111; 
-            padding:25px; 
-            text-align:center; 
-            margin-bottom:15px; 
-            cursor:pointer;
-        }
-        .2gis-btn {
-            font-size: 10px; color: var(--gold); border: 1px solid var(--gold); 
-            padding: 5px 15px; display: inline-block; margin-top: 15px;
-        }
-
-        .warning { font-size: 9px; opacity: 0.3; text-align: center; margin-top: 50px; letter-spacing: 2px; line-height: 1.6; padding: 0 20px; }
+        /* Поле ввода */
+        .input-field { width: 100%; background: #222; border: 1px solid var(--gold); color: #fff; padding: 15px; border-radius: 12px; font-size: 14px; margin-top: 10px; outline: none; }
     </style>
 </head>
 <body>
 
-<div id="branch-modal">
+<div class="top-bar">
+    <button class="btn-catalog-top" onclick="toggleSidebar()">☰ Каталог</button>
+    <div style="color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: 1px;">ALCO HOME</div>
+</div>
+
+<div id="catalog-overlay" onclick="toggleSidebar()"></div>
+<div id="catalog-sidebar">
+    <div class="sidebar-brand"><img src="alc.png" alt="Logo"><div>ALCO HOME</div></div>
+    <div class="sidebar-header">ВЫБЕРИТЕ КАТЕГОРИЮ</div>
+    <div class="cat-list-wrapper">
+        <div class="cat-item-side" onclick="selectCategory('whisky')"><span>🥃 Виски</span></div>
+        <div class="cat-item-side" onclick="selectCategory('vodka')"><span>🍸 Водка</span></div>
+        <div class="cat-item-side" onclick="selectCategory('cognac')"><span>🍷 Коньяк</span></div>
+        <div class="cat-item-side" onclick="selectCategory('draft')"><span>🍺 Разливное</span></div>
+        <div class="cat-item-side" onclick="selectCategory('wine')"><span>🍾 Вино</span></div>
+        <div class="cat-item-side" onclick="selectCategory('beer')"><span>🍺 Импорт</span></div>
+        <div class="cat-item-side" onclick="selectCategory('snacks')"><span>🥨 Закуски</span></div>
+    </div>
+    <div class="btn-back-side" onclick="toggleSidebar()">← Назад к покупкам</div>
+</div>
+
+<header>
+    <div class="header-logo"><img src="alc.png" alt="Logo"><h1>ALCO HOME</h1></div>
+</header>
+
+<div id="home">
+    <div style="text-align: center; color: var(--gold); font-size: 12px; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;" id="current-cat-label">Виски</div>
+    <div class="grid" id="main-catalog"></div>
+</div>
+
+<div class="bottom-nav">
+    <a href="https://instagram.com/alco_home_shymkent" class="nav-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Insta"></a>
+    <div class="nav-btn" onclick="openModal('address-modal')"><img src="https://img.icons8.com/ios-filled/50/c5a059/marker.png" alt="Адреса"></div>
+    <div class="nav-btn" onclick="openModal('support-modal')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support"></div>
+</div>
+
+<div class="checkout-bar" id="checkout-bar" onclick="openModal('cart-modal')">ВАШ ЗАКАЗ (<span id="cart-count">0</span>)</div>
+
+<div id="draft-modal" class="modal">
     <div class="modal-content">
-        <h2 class="branch-title" style="color: var(--gold); margin-bottom: 10px;">Где заберете?</h2>
-        <div class="branch-option" onclick="sendToWhatsApp('branch1')">
-            <b>ALCO HOME №1</b><span>Нурсат 2-50</span>
-        </div>
-        <div class="branch-option" onclick="sendToWhatsApp('branch2')">
-            <b>ALCO HOME №2</b><span>17-мкр, 19</span>
-        </div>
-        <button onclick="closeModal()" style="background:none; border:none; color:#444; margin-top:10px; font-size:10px;">НАЗАД</button>
+        <h2 id="draft-title" style="color:var(--gold); font-size: 14px; text-align: center; text-transform: uppercase;">Сколько литров?</h2>
+        <input type="number" id="liter-input" class="input-field" placeholder="Пример: 1.5" step="0.5">
+        <button class="btn-main" onclick="confirmDraftVolume()">ДОБАВИТЬ В КОРЗИНУ</button>
+        <button onclick="closeModal('draft-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:15px; font-weight:700; cursor: pointer;">ОТМЕНА</button>
     </div>
 </div>
 
-<div id="age-verify">
-    <div class="verify-box">
-        <h2 style="letter-spacing: 5px; color: var(--gold);">ALCO HOME</h2>
-        <p style="font-size: 13px; margin-bottom: 30px;">ВАМ ЕСТЬ 21 ГОД?</p>
-        <button class="btn-add" style="background: var(--gold); color:#000; padding: 15px;" onclick="verifyAge()">ДА, МНЕ ЕСТЬ 21</button>
-        <br><br>
-        <a href="https://google.com" style="color:#333; font-size:10px; text-decoration:none;">НЕТ</a>
+<div id="delivery-modal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:var(--gold); font-size: 14px; text-align: center; text-transform: uppercase;">Куда доставить?</h2>
+        <input type="text" id="delivery-address" class="input-field" placeholder="Улица, дом, кв / Ориентир">
+        <button class="btn-main" onclick="finalOrderSend()">ОФОРМИТЬ В WHATSAPP</button>
+        <button onclick="closeModal('delivery-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:15px; font-weight:700; cursor: pointer;">ОТМЕНА</button>
     </div>
 </div>
 
-<div class="header-logo">
-    <img src="alc.png" alt="Logo">
-    <h1>ALCO HOME</h1>
-</div>
-
-<div id="home" class="page-section" style="display: block;">
-    <div class="category-grid">
-        <div class="cat-card" onclick="showCategory('whisky')">
-            <span class="icon">🥃</span>
-            <span>ВИСКИ</span>
+<div id="address-modal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:var(--gold); font-size: 16px; text-align: center; text-transform: uppercase; margin-bottom: 20px;">Наши маркеты</h2>
+        <div class="branch-option" onclick="window.open('https://go.2gis.com/Vk4ed')">
+            <b style="color: #fff;">ФИЛИАЛ №1</b><br>
+            <small style="color: var(--gold);">мкр. Нурсат 2, дом 50</small><br>
+            <span style="font-size: 9px; color: #666; text-transform: uppercase;">Открыть в 2GIS</span>
         </div>
-        <div class="cat-card" onclick="showCategory('vodka')">
-            <span class="icon">🍸</span>
-            <span>ВОДКА</span>
+        <div class="branch-option" onclick="window.open('https://go.2gis.com/8m43i')">
+            <b style="color: #fff;">ФИЛИАЛ №2</b><br>
+            <small style="color: var(--gold);">17-й микрорайон, дом 19</small><br>
+            <span style="font-size: 9px; color: #666; text-transform: uppercase;">Открыть в 2GIS</span>
         </div>
-        <div class="cat-card" onclick="showCategory('cognac')">
-            <span class="icon">🍷</span>
-            <span>КОНЬЯК</span>
-        </div>
-        <div class="cat-card" onclick="showCategory('wine')">
-            <span class="icon">🥂</span>
-            <span>ВИНО</span>
-        </div>
-        <div class="cat-card" onclick="showCategory('beer')">
-            <span class="icon">🍺</span>
-            <span>ПИВО</span>
-        </div>
-        <div class="cat-card" onclick="showCategory('snacks')">
-            <span class="icon">🥜</span>
-            <span>ЗАКУСКИ</span>
-        </div>
-        <div class="cat-card" onclick="showSection('about')">
-            <span class="icon">📍</span>
-            <span>АДРЕСА</span>
-        </div>
-        <div class="cat-card" onclick="window.open('https://instagram.com/alco_home_shymkent')">
-            <span class="icon">📸</span>
-            <span>INSTA</span>
-        </div>
+        <button onclick="closeModal('address-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:15px; font-weight:700; cursor: pointer;">ЗАКРЫТЬ</button>
     </div>
 </div>
 
-<div id="catalog" class="page-section">
-    <h2 id="catalog-title" style="text-align:center; color:var(--gold); letter-spacing:3px; text-transform: uppercase;"></h2>
-    <div class="grid" id="catalog-list"></div>
+<div id="support-modal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:var(--gold); font-size: 16px; text-align: center;">НУЖНА ПОМОЩЬ?</h2>
+        <div class="branch-option" onclick="window.open('https://wa.me/77479102650')"><b>АДМИНИСТРАТОР</b><br><small>+7 747 910 26 50</small></div>
+        <div class="branch-option" onclick="window.open('https://wa.me/77079814338')"><b>ОПЕРАТОР</b><br><small>+7 707 981 43 38</small></div>
+        <button onclick="closeModal('support-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:10px; cursor: pointer;">ЗАКРЫТЬ</button>
+    </div>
 </div>
 
-<div id="about" class="page-section">
-    <h2 style="text-align:center; color:var(--gold);">LOCATIONS</h2>
-    <div class="location-card" onclick="window.open('https://go.2gis.com/Vk4ed')">
-        <h3 style="margin:0; color:var(--gold);">ALCO HOME №1</h3>
-        <p>Нурсат 2-50</p>
-        <div class="2gis-btn">ОТКРЫТЬ В 2ГИС</div>
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:var(--gold); font-size: 16px; text-align: center; text-transform: uppercase;">Мой заказ</h2>
+        <div id="cart-items-list" style="max-height: 250px; overflow-y: auto;"></div>
+        <button class="btn-main" onclick="openModal('branch-modal')">Оформить заказ</button>
+        <button onclick="closeModal('cart-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:15px; font-weight:700; cursor: pointer;">ЗАКРЫТЬ</button>
     </div>
-    <div class="location-card" onclick="window.open('https://go.2gis.com/S8MyD')">
-        <h3 style="margin:0; color:var(--gold);">ALCO HOME №2</h3>
-        <p>17-мкр, 19</p>
-        <div class="2gis-btn">ОТКРЫТЬ В 2ГИС</div>
-    </div>
-    <div class="warning">МИНЗДРАВ ПРЕДУПРЕЖДАЕТ: ЧРЕЗМЕРНОЕ УПОТРЕБЛЕНИЕ АЛКОГОЛЯ ВРЕДИТ ВАШЕМУ ЗДОРОВЬЮ. 21+</div>
 </div>
 
-<nav>
-    <a onclick="showSection('home')" id="n-home" class="active">ГЛАВНАЯ</a>
-    <a onclick="showCategory('whisky')">КАТАЛОГ</a>
-    <a onclick="showSection('about')">АДРЕСА</a>
-    <a onclick="openModal()">
-        <span style="position:relative;">🛒<span id="cart-count">0</span></span>
-        ЗАКАЗ
-    </a>
-</nav>
+<div id="branch-modal" class="modal">
+    <div class="modal-content">
+        <h2 style="color:var(--gold); font-size: 16px; text-align: center; text-transform: uppercase;">Где заберете?</h2>
+        <div class="branch-option" onclick="selectBranch('branch1')"><b>ФИЛИАЛ №1</b><br><small>Нурсат 2-50</small></div>
+        <div class="branch-option" onclick="selectBranch('branch2')"><b>ФИЛИАЛ №2</b><br><small>17-мкр, 19</small></div>
+        <button onclick="closeModal('branch-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:10px; cursor: pointer;">НАЗАД</button>
+    </div>
+</div>
 
 <script>
-    // JS остается без изменений
     const products = {
-        whisky: [
-            { name: "Jameson", img: "jameson.png" },
-            { name: "Macallan 12", img: "macallan.png" },
-            { name: "Chivas Regal 12", img: "chivas.png" },
-            { name: "Jack Daniels", img: "jack.png" }
-        ],
-        vodka: [
-            { name: "Absolut Blue", img: "absolut.png" },
-            { name: "Grey Goose", img: "greygoose.png" },
-            { name: "Beluga Noble", img: "beluga.png" }
-        ],
-        cognac: [
-            { name: "Hennessy VS", img: "hennessy.png" },
-            { name: "Remy Martin", img: "remy.png" }
-        ],
-        wine: [
-            { name: "Askaneli", img: "askaneli.png" },
-            { name: "Kindzmarauli", img: "kindz.png" }
-        ],
-        beer: [
-            { name: "Corona Extra", img: "corona.png" },
-            { name: "Heineken", img: "heineken.png" }
-        ],
-        snacks: [
-            { name: "Рыба Жерех", img: "jereh.png" },
-            { name: "Сыр Чечел", img: "chechel.png" },
-            { name: "Курт", img: "kurt.png" },
-            { name: "Lays Classic", img: "lays.png" }
-        ]
+        whisky: [ {name: "Macallan 18Y", img: "m1.png"}, {name: "Blue Label", img: "b1.png"}, {name: "Chivas 18", img: "c1.png"} ],
+        vodka: [ {name: "Beluga Gold", img: "bg.png"}, {name: "Grey Goose", img: "gg.png"} ],
+        cognac: [ {name: "Hennessy XO", img: "hx.png"} ],
+        draft: [ {name: "Чешское Светлое", img: "d1.png"}, {name: "Немецкое Нефильтр.", img: "d2.png"} ],
+        wine: [ {name: "Moët Imperial", img: "mi.png"}, {name: "Kindzmarauli", img: "k1.png"} ],
+        beer: [ {name: "Guinness", img: "g1.png"}, {name: "Corona Extra", img: "ce.png"} ],
+        snacks: [ {name: "Сет Сыров", img: "s1.png"}, {name: "Мясное ассорти", img: "s2.png"} ]
     };
 
     let cart = [];
+    let currentCategory = 'whisky';
+    let tempDraftName = '';
+    let selectedBranch = '';
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('catalog-sidebar');
+        const overlay = document.getElementById('catalog-overlay');
+        if(sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 400);
+        } else {
+            overlay.style.display = 'block';
+            setTimeout(() => { overlay.style.opacity = '1'; sidebar.classList.add('open'); }, 10);
+        }
+    }
+
+    function selectCategory(type) {
+        currentCategory = type;
+        const labels = {whisky:'Виски', vodka:'Водка', cognac:'Коньяк', draft:'Разливное', wine:'Вино', beer:'Импорт', snacks:'Закуски'};
+        document.getElementById('current-cat-label').innerText = labels[type];
+        showCategory(type);
+        toggleSidebar();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
 
     function showCategory(type) {
-        const list = document.getElementById('catalog-list');
-        const title = document.getElementById('catalog-title');
+        const list = document.getElementById('main-catalog');
         list.innerHTML = ''; 
-        title.innerText = type; 
         products[type].forEach(p => {
             list.innerHTML += `
-                <div class="product-card">
-                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150/111/c5a059?text=${type}'">
+                <div class="product-card" onclick="void(0)">
+                    <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150/111/c5a059?text=${p.name}'">
                     <h3>${p.name}</h3>
-                    <button class="btn-add" onclick="addToCart('${p.name}')">+ В корзину</button>
-                </div>
-            `;
+                    <div class="add-action-box" onclick="handleAddToCart('${p.name}'); event.stopPropagation();"><span>+ В корзину</span></div>
+                </div>`;
         });
-        showSection('catalog');
+    }
+
+    function handleAddToCart(name) {
+        if(currentCategory === 'draft') {
+            tempDraftName = name;
+            document.getElementById('draft-title').innerText = name;
+            document.getElementById('liter-input').value = "";
+            openModal('draft-modal');
+        } else {
+            addToCart(name);
+        }
+    }
+
+    function confirmDraftVolume() {
+        const vol = document.getElementById('liter-input').value;
+        if(vol > 0) {
+            addToCart(`${tempDraftName} (${vol} л)`);
+            closeModal('draft-modal');
+        }
     }
 
     function addToCart(name) {
         cart.push(name);
-        document.getElementById('cart-count').innerText = cart.length;
+        updateCartUI();
         if (navigator.vibrate) navigator.vibrate(40);
     }
 
-    function showSection(id) {
-        document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
-        window.scrollTo(0,0);
-        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    function updateCartUI() {
+        document.getElementById('cart-count').innerText = cart.length;
+        document.getElementById('checkout-bar').style.display = cart.length > 0 ? 'block' : 'none';
+        const list = document.getElementById('cart-items-list');
+        list.innerHTML = '';
+        cart.forEach((item, i) => {
+            list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #222;"><span>${item}</span><span onclick="removeFromCart(${i})" style="color:#f44; cursor:pointer;">❌</span></div>`;
+        });
     }
 
-    function openModal() {
-        if (cart.length === 0) { alert("Корзина пуста"); return; }
-        document.getElementById('branch-modal').style.display = 'flex';
+    function removeFromCart(i) {
+        cart.splice(i, 1);
+        updateCartUI();
+        if(cart.length === 0) closeModal('cart-modal');
     }
 
-    function closeModal() {
-        document.getElementById('branch-modal').style.display = 'none';
+    function selectBranch(branch) {
+        selectedBranch = branch;
+        openModal('delivery-modal');
     }
 
-    function sendToWhatsApp(branch) {
+    function finalOrderSend() {
+        const addr = document.getElementById('delivery-address').value;
+        if(!addr) { alert("Укажите адрес доставки"); return; }
         const nums = { branch1: "77780010770", branch2: "77080021092" };
-        const message = `Здраствуйте, НОВЫЙ ЗАКАЗ:\n- ` + cart.join('\n- ');
-        window.open(`https://wa.me/${nums[branch]}?text=${encodeURIComponent(message)}`);
-        closeModal();
+        const text = `НОВЫЙ ЗАКАЗ:\n- ` + cart.join('\n- ') + `\n\n📍 АДРЕС: ${addr}`;
+        window.open(`https://wa.me/${nums[selectedBranch]}?text=${encodeURIComponent(text)}`);
+        closeModal('delivery-modal');
     }
 
-    function verifyAge() {
-        document.getElementById('age-verify').style.display = 'none';
-        localStorage.setItem('alco_verified', 'true');
+    function openModal(id) { 
+        document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+        document.getElementById(id).style.display = 'flex'; 
     }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    window.onload = () => {
-        if(localStorage.getItem('alco_verified')) document.getElementById('age-verify').style.display = 'none';
-    };
+    window.onload = () => showCategory('whisky');
 </script>
 
 </body>
 </html>
-
