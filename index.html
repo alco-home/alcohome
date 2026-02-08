@@ -16,7 +16,6 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Montserrat', sans-serif !important; }
         body { margin: 0; background: var(--dark-bg); color: #fff; overflow-x: hidden; padding-bottom: 100px; }
 
-        /* ======= ШАПКА ======= */
         .top-bar { 
             position: sticky; top: 0; z-index: 1500;
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; 
@@ -31,7 +30,6 @@
         .btn-catalog-top:hover { background: rgba(197, 160, 89, 0.2); box-shadow: 0 0 10px var(--gold-glow); }
         .btn-catalog-top:active { background: var(--gold); color: #000; transform: scale(0.95); }
 
-        /* ======= БОКОВОЕ МЕНЮ (КАТАЛОГ) ======= */
         #catalog-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.7);
             z-index: 2400; display: none; opacity: 0; transition: 0.4s;
@@ -70,7 +68,6 @@
         }
         .btn-back-side:active { background: #222; color: #fff; border-color: #fff; }
 
-        /* ======= СЕТКА ТОВАРОВ ======= */
         header { text-align: center; padding: 30px 0; }
         .header-logo img { width: 70px; border-radius: 50%; border: 1px solid var(--gold); }
         .header-logo h1 { color: var(--gold); letter-spacing: 6px; font-size: 18px; margin-top: 12px; text-transform: uppercase; }
@@ -94,7 +91,6 @@
         .add-action-box:active span { color: #000 !important; }
         .add-action-box span { color: var(--gold); font-size: 10px; font-weight: 700; pointer-events: none; }
 
-        /* ======= НИЖНЯЯ ПАНЕЛЬ ======= */
         .bottom-nav { 
             position: fixed; bottom: 0; width: 100%; 
             background: rgba(255, 255, 255, 0.03); 
@@ -113,14 +109,12 @@
 
         .checkout-bar { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 12px 30px; border-radius: 30px; font-weight: 900; font-size: 12px; z-index: 1001; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: pointer; transition: 0.2s; }
 
-        /* МОДАЛКИ */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
         .modal-content { background: #111; border: 1px solid var(--gold); padding: 25px; width: 90%; max-width: 400px; border-radius: 25px; }
         .btn-main { background: var(--gold); color: #000; border: none; padding: 15px; width: 100%; border-radius: 12px; font-weight: 800; margin-top: 20px; text-transform: uppercase; cursor: pointer; }
         .branch-option { background: #1a1a1a; padding: 15px; margin: 10px 0; border-radius: 12px; text-align: center; border: 1px solid transparent; transition: 0.2s; cursor: pointer; }
         .branch-option:hover { border-color: var(--gold); }
 
-        /* Поле ввода */
         .input-field { width: 100%; background: #222; border: 1px solid var(--gold); color: #fff; padding: 15px; border-radius: 12px; font-size: 14px; margin-top: 10px; outline: none; }
     </style>
 </head>
@@ -343,3 +337,4 @@
 
 </body>
 </html>
+
