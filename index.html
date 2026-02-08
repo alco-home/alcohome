@@ -105,7 +105,7 @@
             background: transparent; border-radius: 12px; transition: 0.2s; cursor: pointer;
         }
         .nav-btn:hover { background: rgba(255, 255, 255, 0.05); }
-        .nav-btn img { width: 24px; height: 24px; object-fit: contain; }
+        .nav-btn img { width: 26px; height: 26px; object-fit: contain; }
 
         .checkout-bar { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 12px 30px; border-radius: 30px; font-weight: 900; font-size: 12px; z-index: 1001; display: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); cursor: pointer; transition: 0.2s; }
 
@@ -151,9 +151,15 @@
 </div>
 
 <div class="bottom-nav">
-    <a href="https://instagram.com/alco_home_shymkent" class="nav-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Insta"></a>
-    <div class="nav-btn" onclick="openModal('address-modal')"><img src="https://img.icons8.com/ios-filled/50/c5a059/marker.png" alt="Адреса"></div>
-    <div class="nav-btn" onclick="openModal('support-modal')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Support"></div>
+    <a href="https://instagram.com/alco_home_shymkent" class="nav-btn">
+        <img src="https://img.icons8.com/ios-filled/50/c5a059/instagram-new--v1.png" alt="Insta">
+    </a>
+    <div class="nav-btn" onclick="openModal('address-modal')">
+        <img src="https://img.icons8.com/ios-filled/50/c5a059/marker.png" alt="Адреса">
+    </div>
+    <div class="nav-btn" onclick="openModal('support-modal')">
+        <img src="https://img.icons8.com/ios-filled/50/c5a059/whatsapp--v1.png" alt="Support">
+    </div>
 </div>
 
 <div class="checkout-bar" id="checkout-bar" onclick="openModal('cart-modal')">ВАШ ЗАКАЗ (<span id="cart-count">0</span>)</div>
@@ -170,7 +176,7 @@
 <div id="delivery-modal" class="modal">
     <div class="modal-content">
         <h2 style="color:var(--gold); font-size: 14px; text-align: center; text-transform: uppercase;">Куда доставить?</h2>
-        <input type="text" id="delivery-address" class="input-field" placeholder="Улица, дом, кв / Ориентир">
+        <input type="text" id="delivery-address" class="input-field" placeholder="Улица, дом, кв / Ориентир / Ссылка на 2GIS">
         <button class="btn-main" onclick="finalOrderSend()">ОФОРМИТЬ В WHATSAPP</button>
         <button onclick="closeModal('delivery-modal')" style="background:none; border:none; color:#444; width:100%; margin-top:15px; font-weight:700; cursor: pointer;">ОТМЕНА</button>
     </div>
@@ -244,13 +250,8 @@
         const sidebar = document.getElementById('catalog-sidebar');
         const isOpen = sidebar.classList.contains('open');
         const swipeDistance = touchEndX - touchStartX;
-
-        if (!isOpen && swipeDistance > 70 && touchStartX < 40) {
-            toggleSidebar();
-        }
-        if (isOpen && swipeDistance < -70) {
-            toggleSidebar();
-        }
+        if (!isOpen && swipeDistance > 70 && touchStartX < 40) toggleSidebar();
+        if (isOpen && swipeDistance < -70) toggleSidebar();
     }
 
     function toggleSidebar() {
@@ -280,10 +281,10 @@
         list.innerHTML = ''; 
         products[type].forEach(p => {
             list.innerHTML += `
-                <div class="product-card" onclick="void(0)">
+                <div class="product-card">
                     <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150/111/c5a059?text=${p.name}'">
                     <h3>${p.name}</h3>
-                    <div class="add-action-box" onclick="handleAddToCart('${p.name}'); event.stopPropagation();"><span>+ В корзину</span></div>
+                    <div class="add-action-box" onclick="handleAddToCart('${p.name}')"><span>+ В корзину</span></div>
                 </div>`;
         });
     }
