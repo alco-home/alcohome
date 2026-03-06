@@ -120,7 +120,6 @@
         .cart-actions { display: flex; align-items: center; gap: 8px; }
         .cart-mini-btn { width: 25px; height: 25px; background: #333; color: var(--gold); border: 1px solid var(--gold); border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .btn-edit-item { font-size: 14px; margin-left: 5px; cursor: pointer; opacity: 0.7; }
-        /* Удаление товара если нет кнопок */
         .btn-delete-item { color: #ff4444; font-size: 18px; margin-left: 10px; cursor: pointer; }
     </style>
 </head>
@@ -209,7 +208,7 @@
     const products = {
         whisky: [ 
             {name: "Jameson", vols: ["0.5", "0.7", "1.0"], img: "jameson.png"},
-            {name: "Jameson Black Barrel", vols: ["0.7"], img: "j-black.png"},
+            {name: "Jameson Black Barrel", vols: ["0.7"], img: "jamesonblb.png"},
             {name: "Jameson Orange", vols: ["0.7"], img: "j-orange.png"},
             {name: "Jameson Crested", vols: ["0.7"], img: "j-crested.png"},
             {name: "Jameson в коробке", vols: ["0.7"], img: "j-box.png"},
@@ -252,32 +251,32 @@
             {name: "Ararat 3Y", vols: ["0.5", "0.7"], img: "ararat3.png"},
             {name: "Ararat Coffee", vols: ["0.5"], img: "ararat-c.png"},
             {name: "Ararat 10Y", vols: ["0.7"], img: "ararat10.png"},
-            {name: "Hennessy VS", vols: ["0.5", "0.7", "1.0"], img: "henn.png"},
+            {name: "Hennessy VS", vols: ["0.5", "0.7"], img: "henn.png"},
             {name: "Martell VS", vols: ["0.5", "0.7"], img: "martell.png"},
             {name: "Martell VSOP", vols: ["0.5", "0.7"], img: "martell-v.png"}
         ],
         draft: [ 
-            {name: "Прага руденское", img: "d1.png"}, 
-            {name: "Прага нефильтрованное", img: "d.png"},
-            {name: "Шымкентское", img: "dshym.png"},
-            {name: "Немецкое", img: "pnemeckoe.png"},
+            {name: "Прага руденское", img: "pragarud.png"}, 
+            {name: "Прага нефильтрованное", img: "praganef.png"},
+            {name: "Шымкентское", img: "shym.png"},
+            {name: "Немецкое", img: "nemeckoe.png"},
             {name: "Мохито", img: "mohito.png"},
-            {name: "Прага шымкент", img: "ppragashym.png"},
-            {name: "YÍCHANG", img: "pyichang.png"}
+            {name: "Прага шымкент", img: "pragashym.png"},
+            {name: "YÍCHANG", img: "yichang.png"}
         ],
         wine: [ 
-            {name: "Vellevine Kindzmarauli", img: "wvelkindz.png"}, 
-            {name: "Vellevine Pirosmani", img: "wvelpiros.png"},
-            {name: "Vellevine Tsinandali", img: "wveltsinan.png"},
-            {name: "Brancott Sauvignon", img: "wbrsauvi.png"}, 
-            {name: "Brancott Pinot Noir", img: "wbrpinot.png"},
-            {name: "Corvezzo Prosecco", img: "wcorprosecco.png"}, 
-            {name: "Corvezzo Pinot Grigio", img: "wcorpinot.png"}, 
-            {name: "Corvezzo Merlot", img: "wcormerlot.png"},
-            {name: "Кагор", img: "w6.png"},
-            {name: "Askaneli Kindzmarauli", img: "waskkindz.png"},
-            {name: "Askaneli Saperavi", img: "wassaper.png"},
-            {name: "Askaneli Rkatsiteli", img: "waskrkat.png"}
+            {name: "Vellevine Kindzmarauli", img: "velkindz.png"}, 
+            {name: "Vellevine Pirosmani", img: "velpiros.png"},
+            {name: "Vellevine Tsinandali", img: "veltsinan.png"},
+            {name: "Brancott Sauvignon", img: "brsauvi.png"}, 
+            {name: "Brancott Pinot Noir", img: "brpinot.png"},
+            {name: "Corvezzo Prosecco", img: "corprosecco.png"}, 
+            {name: "Corvezzo Pinot Grigio", img: "corpinot.png"}, 
+            {name: "Corvezzo Merlot", img: "cormerlot.png"},
+            {name: "Кагор", img: "kagor.png"},
+            {name: "Askaneli Kindzmarauli", img: "askkindz.png"},
+            {name: "Askaneli Saperavi", img: "assaper.png"},
+            {name: "Askaneli Rkatsiteli", img: "askrkat.png"}
         ],
         beer: [ 
             {name: "Heineken", vols: ["0.3", "0.5"], img: "heineken.png"},
@@ -289,11 +288,11 @@
             {name: "Bavarian", vols: ["0.5"], img: "bavarian.png"},
             {name: "Wukong", vols: ["0.5"], img: "wukong.png"},
             {name: "Holsten", vols: ["0.5"], img: "holsten.png"},
-            {name: "Blanc 1664", img: "blancjb.png"},
-            {name: "Rose 1664", img: "blancsteklo.png"},
+            {name: "Blanc 1664", img: "blanc1664.png"},
+            {name: "Rose 1664", img: "rose1664.png"},
             {name: "Carlslerg", img: "carlslerg.png"},
             {name: "Bud", vols: ["0.3", "0.5"], img: "bud.png"},
-            {name: "Tsintao", vols: ["0.3"], img: "tsintao.png"},
+            {name: "Tsintao", vols: ["0.3"], img: "tsingtao.png"},
             {name: "Clausthaler", vols: ["0.3"], img: "clausthaler.png"},
             {name: "Astera", vols: ["0.5"], img: "astera.png"},
             {name: "Line brew premium lager", vols: ["0.5"], img: "linebrew.png"},
@@ -315,9 +314,9 @@
             {name: "Big Bob Арахис соленый", img: "bbarahissol.png"},
             {name: "Морские Анчоусы", img: "anchous.png"},
             {name: "Морской Желтый полосатик", img: "polosatik.png"},
-            {name: "Pringles Paprika", img: "pspaprika.png"},
-            {name: "Pringles Original", img: "psoriginal.png"},
-            {name: "Pringles Sour Cream & Onion", img: "pssmetana.png"},
+            {name: "Pringles Paprika 40г", img: "pspaprika40.png"},
+            {name: "Pringles Original 40г", img: "psoriginal40.png"},
+            {name: "Pringles Sour Cream & Onion 40г", img: "pssmetana40.png"},
             {name: "Flint 60г", img: "flint60.png"},
             {name: "Flint 100г", img: "flint100.png"},
             {name: "Flint Гренки 90г", img: "flint90.png"},
@@ -329,8 +328,8 @@
             {name: "Чечил весовой", img: "kemalves.png", type: "weight"},
             {name: "Чечил паутинка весовой", img: "pautinkaves.png", type: "weight"},
             {name: "Рыбные палочки", img: "rbpal.png", type: "pieces"},
-            {name: "Жерех", img: "fish.png", type: "weight"},
-            {name: "Лещь", img: "fish.png", type: "weight"},
+            {name: "Жерех", img: "zhereh.png"},
+            {name: "Лещь", img: "lesh.png"},
             {name: "Адыгейский чечил косичка", img: "adkosichka.png"},
             {name: "Адыгейский чечил паутинка", img: "adpautinka.png"},
             {name: "Бөрте чечил", img: "bortechecil.png"},
